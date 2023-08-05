@@ -1,27 +1,24 @@
-from datetime import datetime, timedelta, date
+from datetime import timedelta, date
+import calendar
 
 
 def get_birthdays_per_week(users):
-    today_day = datetime.now()
-    today_day = today_day.date()
+    today_day = date.today()
+    if today_day.weekday() == 0:
+        today_day = today_day - timedelta(days=2)
     seven_days_interval = today_day + timedelta(days=7)
-    birthday_dict = {}
-    for i in users:
-        k = i["birthday"].replace(year=datetime.now().year)
-        if k.strftime("%A") == "Saturday":
-            k = k + timedelta(days=2)
-        if k.strftime("%A") == "Sunday":
-            k = k + timedelta(days=1)
-        if k >= today_day and k <= seven_days_interval:
-            if k in birthday_dict.keys():
-                birthday_dict[k] = birthday_dict[k] + ", " + i["name"]
-            else:
-                birthday_dict[k] = i["name"]
-                k = k
-    sorted_birthday_dict = {k: v for k, v in sorted(birthday_dict.items())}
-    print(sorted_birthday_dict)
-    for i, k in sorted_birthday_dict.items():
-        print(i.strftime("%A") + ": " + k)
+    birthday_dict = {i: [] for i in range(7)}
+    for user in users:
+        bd = user["birthday"].replace(year=today_day.year)
+        if bd >= today_day and bd <= seven_days_interval:
+            weekday = bd.weekday()
+            if weekday in [5, 6]:
+                weekday = 0
+            birthday_dict[weekday].append(user['name'])
+    for day, names in birthday_dict.items():
+        if len(names) >= 1:
+            names = ", ".join(names)
+            print(calendar.day_name[day] + ": " + names)
 
 
 users = [
