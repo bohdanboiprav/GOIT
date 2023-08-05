@@ -1,0 +1,2 @@
+[console_scripts]
+sort = clean_folder.sort:main

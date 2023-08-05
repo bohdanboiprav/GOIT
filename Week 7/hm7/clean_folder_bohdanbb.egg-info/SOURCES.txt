@@ -1,0 +1,11 @@
+setup.py
+clean_folder/__init__.py
+clean_folder/file_parser.py
+clean_folder/normalize.py
+clean_folder/sort.py
+clean_folder_bohdanbb.egg-info/PKG-INFO
+clean_folder_bohdanbb.egg-info/SOURCES.txt
+clean_folder_bohdanbb.egg-info/dependency_links.txt
+clean_folder_bohdanbb.egg-info/entry_points.txt
+clean_folder_bohdanbb.egg-info/requires.txt
+clean_folder_bohdanbb.egg-info/top_level.txt
