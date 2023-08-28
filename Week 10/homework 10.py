@@ -2,9 +2,10 @@ from collections import UserDict
 
 
 class Record:
-    def __init__(self, name, phone=None):
+    def __init__(self, name, phone):
         self.name = name
         self.phones = []
+        self.phone = phone
         if phone:
             self.phones.append(phone)
 
@@ -20,11 +21,13 @@ class Field:
 
 
 class Name(Field):
-    pass
+    def __init__(self, name):
+        super().__init__(name)
 
 
 class Phone(Field):
-    pass
+    def __init__(self, phone=None):
+        super().__init__(phone)
 
 
 if __name__ == '__main__':
