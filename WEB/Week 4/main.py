@@ -66,9 +66,11 @@ def save_data_from_client(data):
     data_parse = urllib.parse.unquote_plus(data.decode())
     try:
         data_dict = {key: value for key, value in [el.split('=') for el in data_parse.split('&')]}
-        data_time_of_request = {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%s"): data_dict}
-        with open('data/data. json', 'a', encoding='utf-8') as file:
-            json.dump(data_time_of_request, file, ensure_ascii=False, indent=4)
+        with open('data/data. json', 'r+', encoding='utf-8') as file:
+            data = json.load(file)
+            data[datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%s")] = data_dict
+            file.seek(0)
+            json.dump(data, file, ensure_ascii=False, indent=4)
     except ValueError as err:
         logging.error(err)
     except OSError as err:
