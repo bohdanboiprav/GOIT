@@ -4,6 +4,8 @@ import sys
 from datetime import datetime, timedelta
 import json
 
+DEFAULT_CURRENCY = ['EUR', 'USD']
+
 
 class DateException(Exception):
     pass
@@ -19,18 +21,15 @@ async def request(url):
             if response.status == 200:
                 result = await response.json()
                 proper_json_result = {result['date']: {
-                    'EUR': {
-                        'sale': result['exchangeRate'][8]['saleRate'],
-                        'purchase': result['exchangeRate'][8]['purchaseRate']
-                    },
-                    'USD': {
-                        'sale': result['exchangeRate'][23]['saleRate'],
-                        'purchase': result['exchangeRate'][23]['purchaseRate']
-                    }}}
+                    currency: {'sale': next(x['saleRate'] for x in result['exchangeRate'] if x['currency'] == currency),
+                               'purchase': next(
+                                   x['purchaseRate'] for x in result['exchangeRate'] if x['currency'] == currency)}
+                    for currency in DEFAULT_CURRENCY}}
                 return proper_json_result
 
 
-async def main(n_days):
+async def main(n_days, additional_currency=None):
+    DEFAULT_CURRENCY.extend(additional_currency) if additional_currency else None
     if n_days > 10:
         raise DateException("Too many days")
     try:
@@ -47,5 +46,5 @@ async def main(n_days):
 
 
 if __name__ == "__main__":
-    r = asyncio.run(main(int(sys.argv[1])))
+    r = asyncio.run(main(int(sys.argv[1]), sys.argv[2:]))
     print(r)

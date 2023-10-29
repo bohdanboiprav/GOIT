@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 from datetime import datetime, timedelta
 import json
+import sys
 
 
 class DateException(Exception):
@@ -42,5 +43,5 @@ async def main(n_days):
 
 
 if __name__ == "__main__":
-    r = asyncio.run(main(1))
+    r = asyncio.run(main(int(sys.argv[1])))
     print(r)
