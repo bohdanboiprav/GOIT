@@ -5,4 +5,5 @@ app_name = 'quotesapp'
 
 urlpatterns = [
     path('', views.main, name='home'),
+    path('author/<int:auth_id>', views.author, name='author'),
 ]

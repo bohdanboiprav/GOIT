@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Organizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"/>
+</head>
+<body>
+<main class="container">
+    <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
+        <ul>
+            <li><a href="{% url 'quotesapp:home' %}" role="button">Quotes</a></li>
+            <li><a href="#" role="button">Add note</a></li>
+            <li><a href="#" role="button">Add Tag</a></li>
+        </ul>
+        <ul>
+            <li>Welcome <b>Noname</b></li>
+            <li><a href="#" role="button">Profile</a></li>
+            <li><a href="#" role="button">Logout</a></li>
+        </ul>
+        <ul>
+            <li><a href="#" role="button">Sign Up</a></li>
+            <li><a href="#" role="button">Login</a></li>
+        </ul>
+    </nav>
+    {% block content %} {% endblock %}
+</main>
+</body>
+</html>

@@ -1,10 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth.views import LoginView, LogoutView
+
 from . import views
 
-app_name = 'authapp'
+
+app_name = "authapp"
 
 urlpatterns = [
-    path('signup/', views.main, name='signup'),
-    # path('login/', views.loginuser, name='login'),
-    # path('logout/', views.logoutuser, name='logout'),
+    path('signup/', views.signupuser, name='signup'),
+    # path('signin/',
+    #      LoginView.as_view(template_name='authapp/login.html', form_class=LoginForm, redirect_authenticated_user=True),
+    #      name='signin'),
+    # path('logout/', LogoutView.as_view(template_name='authapp/logout.html'), name='logout')
 ]

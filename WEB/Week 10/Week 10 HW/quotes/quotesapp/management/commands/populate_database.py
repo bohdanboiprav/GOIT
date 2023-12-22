@@ -8,7 +8,7 @@ import certifi
 
 connect(
     db="web16",
-    host="mongodb+srv://bohdanboiprav:5c7EeZfMyUi4hm1M@cluster0.qkace2s.mongodb.net/?retryWrites=true&w=majority",
+    host="",
     tlsCAFile=certifi.where())
 
 
