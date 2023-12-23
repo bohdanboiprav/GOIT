@@ -10,18 +10,21 @@
     <nav style="margin-bottom: 20px; border-bottom: 2px solid; padding-left: 30px">
         <ul>
             <li><a href="{% url 'quotesapp:home' %}" role="button">Quotes</a></li>
+            {% if user.is_authenticated %}
             <li><a href="#" role="button">Add note</a></li>
             <li><a href="#" role="button">Add Tag</a></li>
         </ul>
         <ul>
-            <li>Welcome <b>Noname</b></li>
-            <li><a href="#" role="button">Profile</a></li>
-            <li><a href="#" role="button">Logout</a></li>
+            <li>Welcome, <b>{{ user.username }}</b></li>
+<!--            <li><a href="#" role="button">Profile</a></li>-->
+            <li><a href="{% url 'authapp:logout' %}" role="button">Logout</a></li>
         </ul>
+         {% else %}
         <ul>
-            <li><a href="#" role="button">Sign Up</a></li>
-            <li><a href="#" role="button">Login</a></li>
+            <li><a href="{% url 'authapp:signup' %}" role="button">Sign Up</a></li>
+            <li><a href="{% url 'authapp:signin' %}" role="button">Login</a></li>
         </ul>
+        {% endif %}
     </nav>
     {% block content %} {% endblock %}
 </main>
