@@ -11,8 +11,8 @@
         <ul>
             <li><a href="{% url 'quotesapp:home' %}" role="button">Quotes</a></li>
             {% if user.is_authenticated %}
-            <li><a href="#" role="button">Add note</a></li>
-            <li><a href="#" role="button">Add Tag</a></li>
+            <li><a href="{% url 'quotesapp:add_author' %}" role="button">Add Author</a></li>
+            <li><a href="{% url 'quotesapp:add_quote' %}" role="button">Add Quote</a></li>
         </ul>
         <ul>
             <li>Welcome, <b>{{ user.username }}</b></li>

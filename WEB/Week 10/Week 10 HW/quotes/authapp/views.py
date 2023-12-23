@@ -11,6 +11,7 @@ from .forms import RegisterForm
 class RegisterView(View):
     template_name = 'authapp/signup.html'
     form_class = RegisterForm
+    login_required = True
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
