@@ -5,7 +5,7 @@
     {% for quote in quotes %}
     <div class="container" style="border: 2px solid #000; padding: 10px;">
         <p style="font-style: italic"> {{ quote.quote }}</p>
-        <p>by <a href="{% url 'quotesapp:author' quote.author.id %}">{{ quote.author }}</a>.</p>
+        <p>by <a href="{% url 'quotesapp:author' quote.author.fullname|slugify %}">{{ quote.author }}</a>.</p>
         <p>Tags: {% for tag in quote.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
     </div>
     {% endfor %}

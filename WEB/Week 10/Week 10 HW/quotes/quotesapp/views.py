@@ -11,9 +11,11 @@ def main(request):
     return render(request, 'quotesapp/index.html', {"quotes": quotes})
 
 
-def author(request, auth_id):
-    # new_auth_name = auth_name.replace("-", " ")
-    author_data = Author.objects.filter(pk=auth_id).first()
+def author(request, auth_fullname):
+    new_auth_name = auth_fullname.replace("-", " ")
+    _, new_auth_name = new_auth_name.split(" ", 1)
+    # author_data = Author.objects.filter(fullname__iexact=new_auth_name).first()
+    author_data = Author.objects.filter(fullname__icontains=new_auth_name).first()
     return render(request, 'quotesapp/author.html', {"author": author_data})
 
 

@@ -9,8 +9,6 @@ class Author(models.Model):
     born_location = models.CharField(max_length=300, null=False)
     description = models.CharField(max_length=10000, null=False)
 
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-
     def __str__(self):
         return f"{self.fullname}"
 
