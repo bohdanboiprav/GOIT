@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "week 11 l1"
+version = "0.1.0"
+description = ""
+authors = ["Bohdan Boiprav <122865615+bohdanboiprav@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.105.0"
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+mongoengine = "^0.27.0"
+certifi = "^2023.11.17"
+pydantic = {extras = ["email"], version = "^2.5.3"}
+sqlalchemy = "^2.0.23"
+psycopg2-binary = "^2.9.9"
+python-multipart = "^0.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
