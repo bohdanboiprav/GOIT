@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.database.db import get_db
 from src.routes import contacts
 
 app = FastAPI()
@@ -13,10 +16,12 @@ def read_root():
 
 
 @app.get("/api/healthchecker")
-def healthchecker(db: AsynSession = Depends(get_db)):
+async def healthchecker(db: AsyncSession = Depends(get_db)):
     try:
         # Make request
-        result = db.execute(text("SELECT 1")).fetchone()
+        result = (db.execute(text("SELECT 1")))
+        result = await result
+        result.fetchone()
         if result is None:
             raise HTTPException(status_code=500, detail="Database is not configured correctly")
         return {"message": "Welcome to FastAPI!"}
