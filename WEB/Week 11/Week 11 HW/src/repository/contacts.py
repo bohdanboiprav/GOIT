@@ -42,17 +42,6 @@ async def get_contacts_by(name: str, surname: str, email: str, db: AsyncSession)
 async def get_contacts_birthdays(db: AsyncSession):
     today = datetime.date.today()  # - datetime.timedelta(days=7)
     seven_days_later = today + datetime.timedelta(days=7)
-    # contacts = select(Contact).filter(
-    #     ((func.date_part('month', Contact.date_of_birth) >= today.month) &
-    #      (func.date_part('day', Contact.date_of_birth) >= today.day)) &
-    #     ((func.date_part('month', Contact.date_of_birth) <= seven_days_later.month) &
-    #      (func.date_part('day', Contact.date_of_birth) <= seven_days_later.day)))
-    # contacts = select(Contact).filter(
-    #     (func.date_part('DOY', Contact.date_of_birth) >= today.timetuple().tm_yday) &
-    #     (func.date_part('DOY', Contact.date_of_birth) <= seven_days_later.timetuple().tm_yday))
-    # contacts = select(Contact).filter(
-    #     Contact.date_of_birth.between(today.replace(year=func.year(Contact.date_of_birth)),
-    #                                   seven_days_later.replace(year=func.year(Contact.date_of_birth))))
     contacts = select(Contact)
     return_data = []
     contacts = await db.execute(contacts)
