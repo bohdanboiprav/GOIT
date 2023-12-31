@@ -1,6 +1,7 @@
 from datetime import date
 from typing import Optional
 from pydantic import BaseModel, Field, EmailStr, PastDate
+from src.schemas.user import UserResponse
 
 
 class ContactModel(BaseModel):
@@ -20,6 +21,7 @@ class ContactResponse(BaseModel):
     phone: str = Field(max_length=50)
     date_of_birth: date = PastDate()
     additional_info: Optional[str] = Field(max_length=300)
+    user: UserResponse
 
     class Config:
         orm_mode = True
