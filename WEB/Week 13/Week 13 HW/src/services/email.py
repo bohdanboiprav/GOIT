@@ -1,4 +1,3 @@
-import certifi
 from pathlib import Path
 
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
@@ -13,12 +12,11 @@ conf = ConnectionConfig(
     MAIL_FROM="my_app_sender@meta.ua",
     MAIL_PORT=465,
     MAIL_SERVER="smtp.meta.ua",
-    MAIL_FROM_NAME="Desired Name",
+    MAIL_FROM_NAME="Bohdan Boiprav",
     MAIL_STARTTLS=False,
     MAIL_SSL_TLS=True,
     USE_CREDENTIALS=True,
-    VALIDATE_CERTS=True,
-    SSL_CA_CERTS=str(certifi.where()),
+    VALIDATE_CERTS=False,
     TEMPLATE_FOLDER=Path(__file__).parent / 'templates',
 )
 
