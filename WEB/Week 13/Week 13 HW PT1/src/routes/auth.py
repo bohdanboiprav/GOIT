@@ -19,7 +19,7 @@ async def sign_up(body: UserModel, background_tasks: BackgroundTasks, request: R
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
     body.password = auth_service.get_password_hash(body.password)
     new_user = await repository_users.create_user(body, db)
-    background_tasks.add_task(send_email, new_user.email, new_user.username, request.base_url)
+    background_tasks.add_task(send_email, new_user.email, new_user.username, str(request.base_url))
     return new_user
 
 
@@ -72,5 +72,5 @@ async def request_email(body: RequestEmail, background_tasks: BackgroundTasks, r
     if user.confirmed:
         return {"message": "Your email is already confirmed"}
     if user:
-        background_tasks.add_task(send_email, user.email, user.username, request.base_url)
+        background_tasks.add_task(send_email, user.email, user.username, str(request.base_url))
     return {"message": "Check your email for confirmation."}
