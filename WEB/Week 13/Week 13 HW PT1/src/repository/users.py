@@ -1,3 +1,4 @@
+from pydantic import EmailStr
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from libgravatar import Gravatar
@@ -35,3 +36,11 @@ async def confirm_email(email: str, db: AsyncSession) -> None:
     user = await get_user_by_email(email, db)
     user.confirmed = True
     await db.commit()
+
+
+async def update_avatar(email: EmailStr, src_url: str, db: AsyncSession):
+    user = await get_user_by_email(email, db)
+    user.avatar = src_url
+    await db.commit()
+    await db.refresh(user)
+    return user
