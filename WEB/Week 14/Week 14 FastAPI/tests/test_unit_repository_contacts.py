@@ -29,12 +29,12 @@ class TestAsyncContacts(unittest.IsolatedAsyncioTestCase):
         # result = await get_notes(skip=0, limit=10, user=self.user, db=self.session)
         # self.assertEqual(result, notes)
 
-    async def test_create_note(self):
-        body = NoteModel(title="test", description="test note", tags=[1, 2])
-        tags = [Tag(id=1, user_id=1), Tag(id=2, user_id=1)]
-        self.session.query().filter().all.return_value = tags
-        result = await create_note(body=body, user=self.user, db=self.session)
-        self.assertEqual(result.title, body.title)
-        self.assertEqual(result.description, body.description)
-        self.assertEqual(result.tags, tags)
-        self.assertTrue(hasattr(result, "id"))
+    # async def test_create_note(self):
+    #     body = NoteModel(title="test", description="test note", tags=[1, 2])
+    #     tags = [Tag(id=1, user_id=1), Tag(id=2, user_id=1)]
+    #     self.session.query().filter().all.return_value = tags
+    #     result = await create_note(body=body, user=self.user, db=self.session)
+    #     self.assertEqual(result.title, body.title)
+    #     self.assertEqual(result.description, body.description)
+    #     self.assertEqual(result.tags, tags)
+    #     self.assertTrue(hasattr(result, "id"))

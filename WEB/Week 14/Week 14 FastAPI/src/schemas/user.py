@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, ConfigDict
 
 
 class UserModel(BaseModel):
@@ -15,7 +15,7 @@ class UserResponse(BaseModel):
     avatar: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class TokenModel(BaseModel):
