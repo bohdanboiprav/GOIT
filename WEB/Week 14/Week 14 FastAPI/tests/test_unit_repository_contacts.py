@@ -15,26 +15,75 @@ class TestAsyncContacts(unittest.IsolatedAsyncioTestCase):
         self.session = AsyncMock(spec=AsyncSession)
 
     async def test_populate_contacts(self):
-        pass
+        result = await populate_contacts(count=10, current_user=self.current_user, db=self.session)
+        self.assertEqual(result, "Contacts populated")
 
     async def test_get_contacts(self):
         contacts = [Contact(), Contact(), Contact()]
         mocked_contacts = MagicMock()
         mocked_contacts.scalars.return_value.all.return_value = contacts
         self.session.execute.return_value = mocked_contacts
-        # self.session.select(Contact).filter_by(user=self.current_user).offset().limit().scalars.all = contacts
-        # self.session.query().filter().offset().limit().all.return_value = contacts
         result = await get_contacts(current_user=self.current_user, offset=0, limit=10, db=self.session)
         self.assertEqual(result, contacts)
-        # result = await get_notes(skip=0, limit=10, user=self.user, db=self.session)
-        # self.assertEqual(result, notes)
 
-    # async def test_create_note(self):
-    #     body = NoteModel(title="test", description="test note", tags=[1, 2])
-    #     tags = [Tag(id=1, user_id=1), Tag(id=2, user_id=1)]
-    #     self.session.query().filter().all.return_value = tags
-    #     result = await create_note(body=body, user=self.user, db=self.session)
-    #     self.assertEqual(result.title, body.title)
-    #     self.assertEqual(result.description, body.description)
-    #     self.assertEqual(result.tags, tags)
-    #     self.assertTrue(hasattr(result, "id"))
+    async def test_get_contacts_by(self):
+        contacts = [Contact(), Contact(), Contact()]
+        mocked_contacts = MagicMock()
+        mocked_contacts.scalars.return_value.all.return_value = contacts
+        self.session.execute.return_value = mocked_contacts
+        result = await get_contacts_by(name='Test', surname='Test', email='test@example.com',
+                                       current_user=self.current_user, db=self.session)
+        self.assertEqual(result, contacts)
+
+    async def test_get_contact(self):
+        contact = Contact()
+        mocked_contact = MagicMock()
+        mocked_contact.scalar_one_or_none.return_value = contact
+        self.session.execute.return_value = mocked_contact
+        result = await get_contact(contact_id=1, current_user=self.current_user, db=self.session)
+        self.assertEqual(result, contact)
+
+    async def test_get_contacts_birthdays(self):
+        contacts = []
+        mocked_contacts = MagicMock()
+        mocked_contacts.scalars.return_value.all.return_value = contacts
+        self.session.execute.return_value = mocked_contacts
+        result = await get_contacts_birthdays(current_user=self.current_user, db=self.session)
+        self.assertEqual(result, contacts)
+
+    async def test_create_contact(self):
+        body = ContactModel(name='TestU', surname='Test',
+                            email='test@test.com', phone='066221111',
+                            date_of_birth='2004-01-08', additional_info='string')
+        result = await create_contact(body, self.current_user, self.session)
+        self.assertIsInstance(result, Contact)
+        self.assertEqual(result.name, body.name)
+        self.assertEqual(result.surname, body.surname)
+        self.assertEqual(result.email, body.email)
+        self.assertEqual(result.phone, body.phone)
+        self.assertEqual(result.date_of_birth, body.date_of_birth)
+        self.assertEqual(result.additional_info, body.additional_info)
+
+    async def test_update_contact(self):
+        body = ContactModel(name='TestUpd', surname='TestUpd',
+                            email='test@test.com', phone='066221111',
+                            date_of_birth='2004-01-08', additional_info='string')
+        mocked_contact = MagicMock()
+        mocked_contact.scalar_one_or_none.return_value = Contact()
+        self.session.execute.return_value = mocked_contact
+        upd_result = await update_contact(1, body, self.current_user, self.session)
+        self.assertIsInstance(upd_result, Contact)
+        self.assertEqual(upd_result.name, body.name)
+        self.assertEqual(upd_result.surname, body.surname)
+        self.assertEqual(upd_result.email, body.email)
+        self.assertEqual(upd_result.phone, body.phone)
+        self.assertEqual(upd_result.date_of_birth, body.date_of_birth)
+        self.assertEqual(upd_result.additional_info, body.additional_info)
+
+    async def test_remove_contact(self):
+        mocked_contact = MagicMock()
+        mocked_contact.scalar_one_or_none.return_value = Contact()
+        self.session.execute.return_value = mocked_contact
+        result = await remove_contact(1, self.current_user, self.session)
+        self.assertIsInstance(result, Contact)
+        self.assertEqual(result, mocked_contact.scalar_one_or_none.return_value)
