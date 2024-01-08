@@ -21,10 +21,7 @@ class Settings(BaseSettings):
     cloudinary_api_key: str
     cloudinary_api_secret: str
 
-    # model_config = ConfigDict(extra='ignore', env_file=".env", env_file_encoding="utf-8")
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = ConfigDict(extra='ignore', env_file=".env", env_file_encoding="utf-8")
 
 
 settings = Settings()
