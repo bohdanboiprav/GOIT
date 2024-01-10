@@ -7,12 +7,7 @@ dynamodb = boto3.resource('dynamodb', region_name=settings.AWS_REGION,
                           aws_secret_access_key=settings.AWS_SERVER_SECRET_KEY)
 test_table = dynamodb.Table('test')
 
-# test_table.put_item(
-#     Item={
-#         'name': 'johndoe',
-#         'sale': '25',
-#     }
-# )
+# test_table.put_item
 
 response = test_table.get_item(
     Key={
